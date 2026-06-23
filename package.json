@@ -1,0 +1,34 @@
+{
+  "name": "carmel-techfest-registration",
+  "version": "1.0.0",
+  "description": "Tech Fest Event Registration Website for Carmel College of Engineering and Technology",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.8",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.24.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^9.0.1",
+    "ws": "^8.21.0",
+    "xlsx": "^0.18.5"
+  },
+  "keywords": [
+    "techfest",
+    "registration",
+    "supabase",
+    "express"
+  ],
+  "author": "Ashwin Antony Jose",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.1"
+  }
+}

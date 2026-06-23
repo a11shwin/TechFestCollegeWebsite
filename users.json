@@ -1,0 +1,51 @@
+[
+  {
+    "id": "9685f648-1999-40d7-a04c-2076227c93d9",
+    "name": "Jincy",
+    "username": "jincy",
+    "department": "Computer Science & Engineering",
+    "email": "jincy@ccet.ac.in",
+    "passwordHash": "$2b$10$YQMDpyGzFjiH3j6d7oxdm.4EojaChKtszaF0z55RiEf1I0aR3CTbS",
+    "created_at": "2026-06-22T04:46:54.495Z"
+  },
+  {
+    "id": "741e8abd-f636-49e0-9cd0-995085800c86",
+    "name": "Ashwin Antony Jose",
+    "department": "Computer Science & Engineering",
+    "email": "ashwinantonyjose28@gmail.com",
+    "passwordHash": "$2b$10$soD.a1xuL56Cko/lMZkJ3O5R23iSsD4G7ZNcY7P/iBG2PgiwciGkO",
+    "created_at": "2026-06-22T05:05:10.296Z"
+  },
+  {
+    "id": "4ce7681b-0a3f-49ee-8923-daa1b82a33e8",
+    "name": "Ashwin Antony Jose",
+    "department": "Computer Science & Engineering",
+    "email": "ashwinantonyjose@gmail.com",
+    "passwordHash": "$2b$10$KshUDm3PhTP8hqG25UQqgOHEjnhOcCc9djJfLb4.s1LOvueHwG7/C",
+    "created_at": "2026-06-22T06:11:50.296Z"
+  },
+  {
+    "id": "13504850-6ed2-43ca-8790-c0387eb29867",
+    "name": "Arun",
+    "department": "Mechanical Engineering",
+    "email": "arun@gmail.com",
+    "passwordHash": "$2b$10$BIB6MS/GkbVLXwsOeWA8C.RH40yaP0qdeN6tkpEV3CO3XzvTWMiKi",
+    "created_at": "2026-06-22T10:13:22.053Z"
+  },
+  {
+    "id": "c87c40c6-e02e-4643-986d-00d333897530",
+    "name": "Arun jose",
+    "department": "Civil Engineering",
+    "email": "arun1@gmail.com",
+    "passwordHash": "$2b$10$BIB6MS/GkbVLXwsOeWA8C.RH40yaP0qdeN6tkpEV3CO3XzvTWMiKi",
+    "created_at": "2026-06-22T10:16:45.968Z"
+  },
+  {
+    "id": "b7265f53-6e35-4394-81ed-0bada2d25a74",
+    "name": "Ashwin Antony Jose",
+    "department": "Computer Science & Engineering",
+    "email": "ashwin@gmail.com",
+    "passwordHash": "$2b$10$8.OA3Wg4A9AmvVkO/3iV7OsTwaThdDA4pyaeb7nLLjlQ8NVg/D/KG",
+    "created_at": "2026-06-23T04:56:43.007Z"
+  }
+]

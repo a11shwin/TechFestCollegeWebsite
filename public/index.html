@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IGNITRON '26 | Carmel College of Engineering and Technology</title>
+  <meta name="description" content="Official website for IGNITRON '26, the national level technical symposium of Carmel College of Engineering and Technology, Alappuzha. Register now!">
+  
+  <!-- Production Compiled Stylesheet -->
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=2">
+  <script>
+    if (!localStorage.getItem('token')) {
+      window.location.href = 'login.html';
+    }
+  </script>
+</head>
+<body class="h-full flex flex-col selection:bg-rose-600 selection:text-white">
+
+  <!-- Preloader Screen -->
+  <div id="preloader" class="preloader">
+    <div class="loader-spinner mb-6"></div>
+    <h2 class="font-display text-3xl font-extrabold tracking-tight text-white mb-1">IGNITRON '26</h2>
+    <p class="text-xs text-rose-500 tracking-widest font-medium">CARMEL COLLEGE OF ENGINEERING & TECHNOLOGY</p>
+  </div>
+
+  <!-- Mouse follow subtle glow -->
+  <div id="cursor-glow" class="cursor-glow hidden md:block"></div>
+
+  <!-- Particle Background Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation Bar -->
+  <header class="fixed top-0 left-0 w-full z-40 glass-panel border-b border-white/5 transition-all duration-350">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo / College Identity -->
+        <a href="#home" class="flex items-center space-x-3">
+          <div class="w-9 h-9 bg-rose-600 rounded flex items-center justify-center border border-rose-500/20 shadow-[0_4px_12px_rgba(225,29,72,0.3)]">
+            <span class="font-display font-black text-lg text-white">C</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display font-extrabold text-base text-white tracking-wider leading-none">IGNITRON '26</span>
+            <span class="text-[9px] text-zinc-400 tracking-widest leading-none mt-1">CCET ALAPPUZHA</span>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="text-zinc-300 hover:text-white font-medium transition-colors text-sm">Home</a>
+          <a href="#events" class="text-zinc-300 hover:text-white font-medium transition-colors text-sm">Events</a>
+          <a href="#schedule" class="text-zinc-300 hover:text-white font-medium transition-colors text-sm">Schedule</a>
+          <a href="#gallery" class="text-zinc-300 hover:text-white font-medium transition-colors text-sm">Gallery</a>
+          <a href="#contact" class="text-zinc-300 hover:text-white font-medium transition-colors text-sm">Contact</a>
+          <div id="nav-auth-desktop" class="flex items-center space-x-8"></div>
+        </nav>
+
+        <!-- CTAs & Profile -->
+        <div class="hidden md:flex items-center space-x-4" id="nav-cta-desktop">
+          <button onclick="openRegisterModal()" class="cyber-button text-xs py-2 px-6">
+            Register Now
+          </button>
+
+          <!-- Profile Dropdown Container -->
+          <div class="relative" id="profile-dropdown-container">
+            <button onclick="toggleProfileDropdown()" class="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 hover:border-rose-500/50 flex items-center justify-center text-zinc-400 hover:text-white transition-colors overflow-hidden relative group" id="profile-btn" aria-label="User Menu">
+              <i data-lucide="user" class="w-4 h-4" id="profile-icon-default"></i>
+              <span id="profile-initials" class="hidden font-display font-bold text-xs text-white"></span>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="profile-dropdown" class="absolute right-0 mt-3 w-56 glass-panel border border-white/10 rounded-xl shadow-2xl py-2 opacity-0 pointer-events-none scale-95 transition-all duration-200 origin-top-right z-50">
+              <div id="profile-menu-content">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <div class="md:hidden flex items-center">
+          <button id="menu-toggle" class="text-white hover:text-rose-500 focus:outline-none" aria-label="Toggle Navigation">
+            <i data-lucide="menu" class="w-7 h-7"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/5 py-6 px-4 space-y-4">
+      <a href="#home" class="block text-zinc-300 hover:text-white font-medium py-2 text-sm" onclick="toggleMobileMenu()">Home</a>
+      <a href="#events" class="block text-zinc-300 hover:text-white font-medium py-2 text-sm" onclick="toggleMobileMenu()">Events</a>
+      <a href="#schedule" class="block text-zinc-300 hover:text-white font-medium py-2 text-sm" onclick="toggleMobileMenu()">Schedule</a>
+      <a href="#gallery" class="block text-zinc-300 hover:text-white font-medium py-2 text-sm" onclick="toggleMobileMenu()">Gallery</a>
+      <a href="#contact" class="block text-zinc-300 hover:text-white font-medium py-2 text-sm" onclick="toggleMobileMenu()">Contact</a>
+      
+      <div id="mobile-menu-auth-content" class="pt-4 border-t border-white/5 space-y-1 mt-2">
+        <!-- Auth Links Injected via JS -->
+      </div>
+
+      <div id="nav-cta-mobile" class="pt-2">
+        <button onclick="openRegisterModal(); toggleMobileMenu();" class="cyber-button w-full text-center py-3 mt-2 text-xs">
+          Register Now
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-grow pt-20">
+
+    <!-- Hero Showcase Section -->
+    <section id="home" class="min-h-screen relative flex items-center justify-center py-24 px-4">
+      <div class="max-w-5xl mx-auto text-center z-10 space-y-8">
+        
+        <!-- Header Info -->
+        <div class="space-y-3 opacity-0 transform translate-y-4 reveal-hero flex flex-col items-center">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-rose-950/20 text-rose-400 border border-rose-500/20 tracking-wider">
+            🎉 National Technical Symposium
+          </span>
+          <h2 class="text-sm font-semibold tracking-widest text-zinc-400 font-display">Carmel College of Engineering and Technology</h2>
+          <p class="text-[10px] text-zinc-500 uppercase tracking-widest leading-none">Alappuzha, Kerala, India</p>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight text-white mb-8 reveal-hero text-gradient select-none">
+          IGNITRON <span class="text-glow-subtle">2k26</span>
+        </h1>
+
+        <!-- Countdown Dashboard -->
+        <div class="glass-panel border border-white/5 p-6 rounded-2xl max-w-xl mx-auto opacity-0 transform translate-y-4 reveal-hero shadow-[0_15px_40px_rgba(0,0,0,0.5)]">
+          <div class="text-[10px] font-display font-bold tracking-widest text-rose-500 uppercase mb-4">Symposium Commences In</div>
+          <div class="grid grid-cols-4 gap-4 text-center">
+            <div>
+              <div id="days" class="text-2xl sm:text-3xl font-extrabold font-display text-white">00</div>
+              <div class="text-[9px] uppercase tracking-widest text-zinc-500 mt-1">Days</div>
+            </div>
+            <div>
+              <div id="hours" class="text-2xl sm:text-3xl font-extrabold font-display text-white">00</div>
+              <div class="text-[9px] uppercase tracking-widest text-zinc-500 mt-1">Hours</div>
+            </div>
+            <div>
+              <div id="minutes" class="text-2xl sm:text-3xl font-extrabold font-display text-white">00</div>
+              <div class="text-[9px] uppercase tracking-widest text-zinc-500 mt-1">Minutes</div>
+            </div>
+            <div>
+              <div id="seconds" class="text-2xl sm:text-3xl font-extrabold font-display text-white">00</div>
+              <div class="text-[9px] uppercase tracking-widest text-zinc-500 mt-1">Seconds</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 transform translate-y-4 reveal-hero max-w-md mx-auto pt-2">
+          <button onclick="openRegisterModal()" class="cyber-button text-xs py-4 w-full">
+            Reserve Entry Seat
+          </button>
+          <a href="#events" class="w-full py-4 border border-white/10 hover:border-zinc-700 rounded-lg text-xs font-bold tracking-widest text-zinc-300 uppercase transition-all duration-300 text-center hover:bg-white/5">
+            View Competitions
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-1.5 opacity-40 hover:opacity-100 transition-opacity">
+        <span class="text-[9px] tracking-widest uppercase text-zinc-500">Discover More</span>
+        <div class="w-[1.5px] h-6 bg-gradient-to-b from-rose-600 to-transparent animate-bounce"></div>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative space-y-16">
+      <div class="text-center space-y-3">
+        <h2 class="text-xs font-semibold tracking-widest uppercase text-rose-500">CHOOSE YOUR CHALLENGE</h2>
+        <h3 class="text-3xl sm:text-5xl font-extrabold text-white">SYMPOSIUM CONTESTS</h3>
+        <p class="text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed">
+          Participate in premier events curated to challenge engineering capabilities, developer intuition, and technical vision.
+        </p>
+      </div>
+
+      <!-- Competitions Grid -->
+      <div id="events-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Injected via script.js -->
+      </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="py-28 bg-zinc-950/40 border-y border-white/5 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-5xl mx-auto space-y-16">
+        
+        <div class="text-center space-y-3">
+          <h2 class="text-xs font-semibold tracking-widest uppercase text-rose-500">EVENT PLANNER</h2>
+          <h3 class="text-3xl sm:text-5xl font-extrabold text-white">SYMPOSIUM SCHEDULE</h3>
+        </div>
+
+        <!-- Professional Timeline Grid -->
+        <div class="relative border-l border-zinc-800 ml-4 md:ml-32 space-y-8">
+          
+          <!-- Node 1 -->
+          <div class="relative pl-8 md:pl-12 group">
+            <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-rose-600 border border-black rounded-full shadow-[0_0_8px_#e11d48]"></div>
+            <div class="md:absolute md:-left-32 md:top-1 text-zinc-500 font-display font-bold text-xs tracking-wider group-hover:text-rose-500 transition-colors">
+              08:30 AM
+            </div>
+            <div class="glass-panel border border-white/5 p-6 rounded-xl space-y-2">
+              <h4 class="font-display font-bold text-lg text-white">Desk Check-In & Badges</h4>
+              <p class="text-sm text-zinc-400">Collect credentials, event credentials, schedules, and developer delegate cards.</p>
+              <div class="flex items-center space-x-2 text-xs text-rose-500 font-medium pt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                <span>Symposium Reception Desk</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 2 -->
+          <div class="relative pl-8 md:pl-12 group">
+            <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-rose-600 border border-black rounded-full shadow-[0_0_8px_#e11d48]"></div>
+            <div class="md:absolute md:-left-32 md:top-1 text-zinc-500 font-display font-bold text-xs tracking-wider group-hover:text-rose-500 transition-colors">
+              09:30 AM
+            </div>
+            <div class="glass-panel border border-white/5 p-6 rounded-xl space-y-2">
+              <h4 class="font-display font-bold text-lg text-white">Opening & Keynote Presentation</h4>
+              <p class="text-sm text-zinc-400">Inaugural lamp ceremony, welcome address by coordinators, and briefing of competition rules.</p>
+              <div class="flex items-center space-x-2 text-xs text-rose-500 font-medium pt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                <span>Carmel Central Auditorium</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 3 -->
+          <div class="relative pl-8 md:pl-12 group">
+            <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-rose-600 border border-black rounded-full shadow-[0_0_8px_#e11d48]"></div>
+            <div class="md:absolute md:-left-32 md:top-1 text-zinc-500 font-display font-bold text-xs tracking-wider group-hover:text-rose-500 transition-colors">
+              10:30 AM
+            </div>
+            <div class="glass-panel border border-white/5 p-6 rounded-xl space-y-2">
+              <h4 class="font-display font-bold text-lg text-white">Morning Rounds Commences</h4>
+              <p class="text-sm text-zinc-400">Launch of the Coding challenges, Hackathons, UI/UX slots, and Robotics testing qualifiers.</p>
+              <div class="flex items-center space-x-2 text-xs text-rose-500 font-medium pt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                <span>Assigned Laboratories</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 4 -->
+          <div class="relative pl-8 md:pl-12 group">
+            <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-rose-600 border border-black rounded-full shadow-[0_0_8px_#e11d48]"></div>
+            <div class="md:absolute md:-left-32 md:top-1 text-zinc-500 font-display font-bold text-xs tracking-wider group-hover:text-rose-500 transition-colors">
+              01:00 PM
+            </div>
+            <div class="glass-panel border border-white/5 p-6 rounded-xl space-y-2">
+              <h4 class="font-display font-bold text-lg text-white">Lunch & Networking</h4>
+              <p class="text-sm text-zinc-400">Buffet services provided for all registered members at the campus court.</p>
+              <div class="flex items-center space-x-2 text-xs text-rose-500 font-medium pt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                <span>CCET Dining Halls</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 5 -->
+          <div class="relative pl-8 md:pl-12 group">
+            <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-rose-600 border border-black rounded-full shadow-[0_0_8px_#e11d48]"></div>
+            <div class="md:absolute md:-left-32 md:top-1 text-zinc-500 font-display font-bold text-xs tracking-wider group-hover:text-rose-500 transition-colors">
+              02:00 PM
+            </div>
+            <div class="glass-panel border border-white/5 p-6 rounded-xl space-y-2">
+              <h4 class="font-display font-bold text-lg text-white">Afternoon Finals & Pitches</h4>
+              <p class="text-sm text-zinc-400">Startup business concepts pitching, robot fight, and final submission evaluations.</p>
+              <div class="flex items-center space-x-2 text-xs text-rose-500 font-medium pt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                <span>Seminar Blocks</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Node 6 -->
+          <div class="relative pl-8 md:pl-12 group">
+            <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 bg-rose-600 border border-black rounded-full shadow-[0_0_8px_#e11d48]"></div>
+            <div class="md:absolute md:-left-32 md:top-1 text-zinc-500 font-display font-bold text-xs tracking-wider group-hover:text-rose-500 transition-colors">
+              04:30 PM
+            </div>
+            <div class="glass-panel border border-white/5 p-6 rounded-xl space-y-2">
+              <h4 class="font-display font-bold text-lg text-white">Prize Distribution & Valedictory</h4>
+              <p class="text-sm text-zinc-400">Awarding ceremony, certificates issuance, and coordinator closing speech.</p>
+              <div class="flex items-center space-x-2 text-xs text-rose-500 font-medium pt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                <span>Main Auditorium</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
+      <div class="text-center space-y-3">
+        <h2 class="text-xs font-semibold tracking-widest uppercase text-rose-500">VISUAL OVERVIEW</h2>
+        <h3 class="text-3xl sm:text-5xl font-extrabold text-white">CAMPUS REFLECTIONS</h3>
+      </div>
+
+      <!-- Modern Card Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="relative group overflow-hidden rounded-lg border border-white/5 aspect-square">
+          <div class="absolute inset-0 bg-rose-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 z-10">
+            <span class="font-display text-xs uppercase tracking-widest font-bold">Inauguration</span>
+          </div>
+          <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80" alt="Tech Fest Opening" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="relative group overflow-hidden rounded-lg border border-white/5 aspect-square">
+          <div class="absolute inset-0 bg-rose-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 z-10">
+            <span class="font-display text-xs uppercase tracking-widest font-bold">Hackathon Arena</span>
+          </div>
+          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Students coding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="relative group overflow-hidden rounded-lg border border-white/5 aspect-square">
+          <div class="absolute inset-0 bg-rose-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 z-10">
+            <span class="font-display text-xs uppercase tracking-widest font-bold">System Labs</span>
+          </div>
+          <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80" alt="Robotics Arena" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        </div>
+        <div class="relative group overflow-hidden rounded-lg border border-white/5 aspect-square">
+          <div class="absolute inset-0 bg-rose-950/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 z-10">
+            <span class="font-display text-xs uppercase tracking-widest font-bold">Awards Board</span>
+          </div>
+          <img src="https://images.unsplash.com/photo-1531058020387-3be344559be6?auto=format&fit=crop&w=600&q=80" alt="Grand Stage" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Map Section -->
+    <section id="contact" class="py-28 bg-zinc-950/20 border-t border-white/5 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+        
+        <!-- Info Cards -->
+        <div class="space-y-6 flex flex-col justify-between">
+          <div>
+            <h2 class="text-xs font-semibold tracking-widest uppercase text-rose-500 mb-2">HOSPITALITY & ACCESS</h2>
+            <h3 class="text-3xl sm:text-5xl font-extrabold text-white">REACH OUT TO US</h3>
+          </div>
+          
+          <div class="space-y-4">
+            
+            <!-- Person -->
+            <div class="glass-panel border border-white/5 p-6 rounded-xl flex items-start space-x-4">
+              <div class="p-3 bg-rose-600/5 text-rose-500 rounded-lg border border-rose-500/10">
+                <i data-lucide="user" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-zinc-500 text-[10px] font-display uppercase tracking-widest">General Coordinator</h4>
+                <p class="text-white font-bold text-base mt-1">Ashwin Antony Jose</p>
+                <a href="tel:9778232241" class="text-rose-500 hover:underline text-xs mt-1 block flex items-center space-x-1">
+                  <i data-lucide="phone" class="w-3.5 h-3.5 mr-1"></i>
+                  <span>+91 97782 32241</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- GPay info -->
+            <div class="glass-panel border border-white/5 p-6 rounded-xl flex items-start space-x-4">
+              <div class="p-3 bg-emerald-600/5 text-emerald-500 rounded-lg border border-emerald-500/10">
+                <i data-lucide="credit-card" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-zinc-500 text-[10px] font-display uppercase tracking-widest">Registration Payments</h4>
+                <p class="text-white font-bold text-base mt-1">Google Pay (GPay) Accepted</p>
+                <p class="text-xs text-zinc-400 mt-0.5">Submit screenshot with transaction ID during registration.</p>
+                <div class="mt-2 text-emerald-400 font-display font-extrabold text-sm tracking-wider">
+                  GPay Phone No: 9778232241
+                </div>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="glass-panel border border-white/5 p-6 rounded-xl flex items-start space-x-4">
+              <div class="p-3 bg-rose-600/5 text-rose-500 rounded-lg border border-rose-500/10">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="text-zinc-500 text-[10px] font-display uppercase tracking-widest">Venue Address</h4>
+                <p class="text-white font-bold text-base mt-1">Carmel College of Engineering & Technology</p>
+                <p class="text-xs text-zinc-400 mt-1">Punnapra, Alappuzha, Kerala - 688004, India</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Google Map -->
+        <div class="glass-panel border border-white/5 p-6 rounded-xl flex flex-col">
+          <h4 class="text-white font-display font-bold text-lg mb-4 flex items-center">
+            <i data-lucide="navigation" class="w-4 h-4 mr-2 text-rose-500"></i>
+            Interactive Location Map
+          </h4>
+          <div class="w-full h-80 rounded-lg overflow-hidden border border-white/5 relative flex-grow">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3937.5255476145396!2d76.34758507567746!3d9.286782585293677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1m3!1d9263.153406!2d76.3475851!3d9.2867826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1718780000000!5m2!1sen!2sin" 
+              class="absolute inset-0 w-full h-full border-0" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Registration Gateway Dialog -->
+  <dialog id="register-dialog" class="glass-panel border border-white/10 rounded-2xl p-0 w-full max-w-2xl text-white outline-none shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+    
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-5 border-b border-white/5 bg-zinc-950/40">
+      <div class="flex items-center space-x-2.5">
+        <i data-lucide="user-check" class="w-5 h-5 text-rose-500"></i>
+        <h3 class="font-display font-bold text-base tracking-wider text-white">SYMPOSIUM GATEWAY</h3>
+      </div>
+      <button onclick="closeRegisterModal()" class="text-zinc-400 hover:text-white transition-colors focus:outline-none">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form id="registration-form" class="px-6 py-6 space-y-6 max-h-[75vh] overflow-y-auto" autocomplete="off" novalidate>
+      
+      <!-- Step indicators -->
+      <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-2 text-[10px] uppercase font-display tracking-widest font-bold">
+        <div id="step-1-indicator" class="flex items-center space-x-2 text-rose-500">
+          <span class="w-5.5 h-5.5 rounded-full border border-rose-500 flex items-center justify-center bg-rose-950/20 text-xs">1</span>
+          <span>Personal Info</span>
+        </div>
+        <div class="h-[1px] flex-grow bg-zinc-800 mx-4"></div>
+        <div id="step-2-indicator" class="flex items-center space-x-2 text-zinc-500">
+          <span class="w-5.5 h-5.5 rounded-full border border-white/5 flex items-center justify-center bg-transparent text-xs">2</span>
+          <span>Payment Details</span>
+        </div>
+      </div>
+
+      <!-- Error banner -->
+      <div id="form-error-banner" class="hidden p-3.5 bg-rose-950/20 border border-rose-500/30 rounded-lg text-xs text-rose-300 flex items-start space-x-2">
+        <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>
+        <span id="form-error-text">Check required fields.</span>
+      </div>
+
+      <!-- STEP 1 -->
+      <div id="form-step-1" class="space-y-4">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Full Name -->
+          <div>
+            <label for="name" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Full Name</label>
+            <input type="text" id="name" name="name" required autocomplete="off" class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="Enter your full name">
+            <span class="text-[10px] text-rose-500 mt-1 hidden" id="err-name">Full name is required.</span>
+          </div>
+
+          <!-- Dept -->
+          <div>
+            <label for="department" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Department</label>
+            <select id="department" name="department" required autocomplete="off" class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500">
+              <option value="" disabled selected>Select your department</option>
+              <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+              <option value="Electrical & Electronics Engineering">Electrical & Electronics Engineering</option>
+              <option value="Electronics & Communication Engineering">Electronics & Communication Engineering</option>
+              <option value="Other">Other Department</option>
+            </select>
+            <span class="text-[10px] text-rose-500 mt-1 hidden" id="err-department">Select your academic branch.</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Email Address</label>
+            <input type="email" id="email" name="email" required autocomplete="off" class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="Enter your email address">
+            <span class="text-[10px] text-rose-500 mt-1 hidden" id="err-email">Provide a valid email id.</span>
+          </div>
+
+          <!-- Student ID -->
+          <div>
+            <label for="studentId" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Student ID / College ID</label>
+            <input type="text" id="studentId" name="studentId" required autocomplete="off" class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="Enter your college ID">
+            <span class="text-[10px] text-rose-500 mt-1 hidden" id="err-studentId">Student ID is required.</span>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="pt-2 flex justify-end">
+          <button type="button" onclick="nextStep()" class="cyber-button text-xs py-2.5 px-6">
+            Continue to Payment
+          </button>
+        </div>
+
+      </div>
+
+      <!-- STEP 2 -->
+      <div id="form-step-2" class="hidden space-y-5">
+        
+        <!-- Select Event -->
+        <div>
+          <label for="selectedEvent" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Select Event / Contest</label>
+          <select id="selectedEvent" name="event" required autocomplete="off" class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500">
+            <option value="" disabled selected>Choose Competition</option>
+            <option value="Hackathon">Hackathon (Free - Max 4 / Team)</option>
+            <option value="UI/UX Design Challenge">UI/UX Design Challenge (Free - Indiv)</option>
+            <option value="Coding Competition">Coding Competition (₹100 - Indiv)</option>
+            <option value="AI Innovation Challenge">AI Innovation Challenge (₹200 - Team)</option>
+            <option value="Robotics Contest">Robotics Contest (₹400 - Team)</option>
+            <option value="Web Development Contest">Web Development Contest (₹150 - Indiv)</option>
+            <option value="Gaming Tournament">Gaming Tournament (₹250 - Indiv/Team)</option>
+            <option value="Startup Pitch Competition">Startup Pitch Competition (₹200 - Team)</option>
+          </select>
+          <span class="text-[10px] text-rose-500 mt-1 hidden" id="err-event">Select the event name.</span>
+        </div>
+
+        <!-- Payment info -->
+        <div id="payment-details-box" class="p-5 bg-zinc-900/50 border border-white/5 rounded-xl space-y-3">
+          <h4 class="font-display font-bold text-xs text-rose-500 uppercase tracking-widest flex items-center">
+            <i data-lucide="wallet" class="w-4 h-4 mr-2"></i>
+            Registration Fee Payment (GPay Only)
+          </h4>
+          <div class="text-xs space-y-1.5 leading-relaxed text-zinc-400">
+            <p>Scan GPay QR or transfer fee directly to the General Coordinator's account:</p>
+            <p class="font-mono text-white text-sm font-semibold">GPay Account No: 9778232241</p>
+            <p>Account Name: <span class="text-white">Ashwin Antony Jose</span></p>
+          </div>
+        </div>
+
+        <!-- Screenshot upload -->
+        <div id="screenshot-upload-box">
+          <label for="paymentScreenshot" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Upload Payment Screenshot Receipt (JPG, PNG)</label>
+          <div class="relative border border-dashed border-white/10 hover:border-rose-500/50 rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer transition-colors bg-zinc-950/20" id="file-dropzone">
+            <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/*" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+            <i data-lucide="upload-cloud" class="w-9 h-9 text-zinc-500 mb-2" id="upload-icon"></i>
+            <span class="text-xs text-zinc-400 text-center" id="upload-filename">Drag & drop files, or browse from computer</span>
+          </div>
+          <span class="text-[10px] text-rose-500 mt-1 hidden" id="err-screenshot">A payment screenshot is required.</span>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="pt-2 flex items-center justify-between">
+          <button type="button" onclick="prevStep()" class="px-5 py-2.5 bg-transparent border border-white/5 rounded-md text-xs text-zinc-300 uppercase tracking-wider hover:border-zinc-700 transition-colors">
+            Go Back
+          </button>
+          
+          <button type="submit" id="submit-btn" class="cyber-button text-xs py-2.5 px-6 flex items-center space-x-2">
+            <span>Register & Confirm</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+    <!-- Success Panel -->
+    <div id="register-success" class="hidden px-8 py-14 text-center space-y-6">
+      <div class="w-16 h-16 bg-emerald-500/5 text-emerald-500 border border-emerald-500/10 rounded-full flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+        <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+      </div>
+      <div class="space-y-1">
+        <h4 class="font-display font-bold text-2xl text-white">REGISTRATION VERIFIED</h4>
+        <p class="text-xs text-zinc-400 max-w-sm mx-auto">
+          Your transaction record has been safely captured. Our coordinators will review your screenshot and contact you via email shortly.
+        </p>
+      </div>
+      <div class="p-4 bg-zinc-950/60 rounded-lg max-w-xs mx-auto border border-white/5 font-mono text-xs space-y-1 text-left">
+        <div class="flex justify-between"><span class="text-zinc-500">Receipt ID:</span> <span class="text-white font-bold" id="receipt-id">N/A</span></div>
+        <div class="flex justify-between"><span class="text-zinc-500">Contest:</span> <span class="text-white" id="receipt-event">N/A</span></div>
+        <div class="flex justify-between"><span class="text-zinc-500">Payment:</span> <span class="text-emerald-500">Captured</span></div>
+      </div>
+      <button onclick="closeRegisterModal()" class="cyber-button text-xs py-2.5 px-8">
+        Close Window
+      </button>
+    </div>
+
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="bg-black border-t border-white/5 py-12 px-4 sm:px-6 lg:px-8 mt-auto z-10 no-print">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center space-x-3">
+        <div class="w-7 h-7 bg-rose-600 rounded flex items-center justify-center font-display font-bold text-white text-xs">
+          C
+        </div>
+        <span class="text-xs text-zinc-500 font-display">IGNITRON '26 &copy; Carmel College of Engineering & Technology</span>
+      </div>
+      <div class="flex space-x-6 text-[11px] text-zinc-500">
+        <a href="#events" class="hover:text-white transition-colors">Events</a>
+        <a href="#schedule" class="hover:text-white transition-colors">Timeline</a>
+        <a href="#contact" class="hover:text-white transition-colors">Hospitality</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Admin Authentication Modal -->
+  <dialog id="admin-auth-dialog" class="bg-transparent p-0 w-full max-w-sm backdrop:bg-black/80 backdrop:backdrop-blur-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 m-0 rounded-2xl shadow-2xl border border-white/10 opacity-0 scale-95 transition-all duration-300" onclick="if(event.target===this)closeAdminAuthModal()">
+    <div class="glass-panel p-6 rounded-2xl relative shadow-[0_0_40px_rgba(225,29,72,0.15)]">
+      <button onclick="closeAdminAuthModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors" aria-label="Close Admin Modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      
+      <div class="flex items-center space-x-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center border border-rose-500/30 text-rose-500 shadow-[0_0_15px_rgba(225,29,72,0.2)]">
+          <i data-lucide="shield" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-white text-sm uppercase tracking-widest">Admin Gateway</h3>
+          <p class="text-[10px] text-zinc-400 mt-0.5">Authorized Personnel Only</p>
+        </div>
+      </div>
+
+      <div id="admin-auth-error" class="hidden p-3 bg-rose-950/30 border border-rose-500/30 rounded-lg text-xs text-rose-300 mb-4 flex items-start space-x-2">
+        <i data-lucide="alert-circle" class="w-3.5 h-3.5 flex-shrink-0 mt-0.5"></i>
+        <span id="admin-auth-error-text">Invalid credentials</span>
+      </div>
+
+      <form id="admin-auth-form" class="space-y-4 text-left" novalidate>
+        <div>
+          <label for="admin-modal-password" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Dashboard Password</label>
+          <input type="password" id="admin-modal-password" required autocomplete="current-password" class="form-input w-full px-4 rounded-md text-sm text-center tracking-widest focus:border-rose-500" placeholder="••••••••">
+        </div>
+        <button type="submit" id="admin-modal-submit" class="cyber-button w-full py-3 mt-2 text-xs tracking-widest font-bold uppercase flex items-center justify-center space-x-2">
+          <span>Authenticate</span>
+          <i data-lucide="lock" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

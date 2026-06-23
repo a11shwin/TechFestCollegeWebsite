@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal | IGNITRON '26</title>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=2">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black text-white h-full flex flex-col selection:bg-rose-600 selection:text-white">
+
+  <!-- Particle Background Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Mouse follow subtle glow -->
+  <div id="cursor-glow" class="cursor-glow hidden md:block"></div>
+
+  <!-- Main Container -->
+  <div class="flex-grow flex items-center justify-center p-4">
+    <div class="glass-panel border border-white/10 p-8 rounded-2xl w-full max-w-md space-y-6 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden">
+      <!-- Glow decoration -->
+      <div class="absolute -top-10 -right-10 w-24 h-24 bg-rose-600/5 rounded-full blur-2xl"></div>
+
+      <!-- Header Identity -->
+      <div class="text-center space-y-2">
+        <a href="index.html" class="inline-block">
+          <div class="w-12 h-12 bg-rose-600 rounded-xl flex items-center justify-center border border-rose-500/20 shadow-[0_4px_12px_rgba(225,29,72,0.3)] mx-auto mb-3">
+            <span class="font-display font-black text-xl text-white">C</span>
+          </div>
+        </a>
+        <h2 class="font-display font-extrabold text-2xl tracking-tight text-white" id="portal-title">STUDENT GATEWAY</h2>
+        <p class="text-xs text-zinc-400" id="portal-subtitle">Access the national level symposium dashboard & registrations.</p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="grid grid-cols-2 p-1 bg-zinc-950/60 border border-white/5 rounded-lg text-xs font-semibold uppercase tracking-wider font-display">
+        <button id="tab-login" class="py-2.5 rounded-md text-white bg-rose-600/10 border border-rose-500/20 focus:outline-none transition-all duration-300" onclick="switchTab('login')">
+          Log In
+        </button>
+        <button id="tab-signup" class="py-2.5 rounded-md text-zinc-400 hover:text-white focus:outline-none transition-all duration-300" onclick="switchTab('signup')">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- Notification/Error Banner -->
+      <div id="auth-banner" class="hidden p-3.5 bg-rose-950/20 border border-rose-500/30 rounded-lg text-xs text-rose-300 flex items-start space-x-2">
+        <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0 mt-0.5"></i>
+        <span id="auth-banner-text">Authentication message.</span>
+      </div>
+
+      <!-- Log In Form -->
+      <form id="login-form" class="space-y-4 text-left" novalidate>
+        <div>
+          <label for="login-email" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Username or Email</label>
+          <input type="text" id="login-email" required autocomplete="username" class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="Enter username or email">
+        </div>
+        
+        <div>
+          <label for="login-password" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Password</label>
+          <input type="password" id="login-password" required autocomplete="current-password" class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="••••••••">
+        </div>
+
+        <button type="submit" id="login-btn" class="cyber-button w-full py-3 mt-2 text-xs tracking-widest font-bold uppercase flex items-center justify-center space-x-2">
+          <span>Sign In</span>
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+        </button>
+      </form>
+
+      <!-- Sign Up Form (Hidden by default) -->
+      <form id="signup-form" class="hidden space-y-4 text-left" novalidate>
+        <div>
+          <label for="signup-name" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Full Name</label>
+          <input type="text" id="signup-name" required class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="e.g. John Doe">
+        </div>
+
+        <div>
+          <label for="signup-department" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Department</label>
+          <select id="signup-department" required class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500">
+            <option value="" disabled selected>Select Department</option>
+            <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Electrical & Electronics Engineering">Electrical & Electronics Engineering</option>
+            <option value="Electronics & Communication Engineering">Electronics & Communication Engineering</option>
+            <option value="Other">Other Department</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="signup-phone" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Phone Number</label>
+          <input type="tel" id="signup-phone" required class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="e.g. 9876543210">
+        </div>
+
+        <div>
+          <label for="signup-email" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Email Address</label>
+          <input type="email" id="signup-email" required class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="e.g. john@example.com">
+        </div>
+
+        <div>
+          <label for="signup-password" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Password</label>
+          <input type="password" id="signup-password" required class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="••••••••">
+        </div>
+
+        <div>
+          <label for="signup-confirm-password" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Confirm Password</label>
+          <input type="password" id="signup-confirm-password" required class="form-input w-full px-4 rounded-md text-sm focus:border-rose-500" placeholder="••••••••">
+        </div>
+
+        <button type="submit" id="signup-btn" class="cyber-button w-full py-3 mt-2 text-xs tracking-widest font-bold uppercase flex items-center justify-center space-x-2">
+          <span>Create Account</span>
+          <i data-lucide="user-plus" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Admin Gateway Link -->
+    <div class="text-center mt-6">
+      <button onclick="openAdminAuthModal()" class="text-[10px] text-zinc-500 hover:text-rose-500 font-display tracking-widest uppercase transition-colors flex items-center justify-center space-x-1 mx-auto">
+        <i data-lucide="shield" class="w-3 h-3"></i>
+        <span>Admin Gateway</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Admin Authentication Modal -->
+  <dialog id="admin-auth-dialog" class="bg-transparent p-0 w-full max-w-sm backdrop:bg-black/80 backdrop:backdrop-blur-sm fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 m-0 rounded-2xl shadow-2xl border border-white/10 opacity-0 scale-95 transition-all duration-300" onclick="if(event.target===this)closeAdminAuthModal()">
+    <div class="glass-panel p-6 rounded-2xl relative shadow-[0_0_40px_rgba(225,29,72,0.15)]">
+      <button onclick="closeAdminAuthModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors" aria-label="Close Admin Modal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      
+      <div class="flex items-center space-x-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center border border-rose-500/30 text-rose-500 shadow-[0_0_15px_rgba(225,29,72,0.2)]">
+          <i data-lucide="shield" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-white text-sm uppercase tracking-widest">Admin Gateway</h3>
+          <p class="text-[10px] text-zinc-400 mt-0.5">Authorized Personnel Only</p>
+        </div>
+      </div>
+
+      <div id="admin-auth-error" class="hidden p-3 bg-rose-950/30 border border-rose-500/30 rounded-lg text-xs text-rose-300 mb-4 flex items-start space-x-2">
+        <i data-lucide="alert-circle" class="w-3.5 h-3.5 flex-shrink-0 mt-0.5"></i>
+        <span id="admin-auth-error-text">Invalid credentials</span>
+      </div>
+
+      <form id="admin-auth-form" class="space-y-4 text-left" novalidate>
+        <!-- Hidden username field to fix Chrome Password Manager confusion -->
+        <input type="text" name="username" value="admin" autocomplete="username" class="hidden" aria-hidden="true">
+        
+        <div>
+          <label for="admin-modal-password" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Dashboard Password</label>
+          <input type="password" id="admin-modal-password" name="password" required autocomplete="current-password" class="form-input w-full px-4 rounded-md text-sm text-center tracking-widest focus:border-rose-500" placeholder="••••••••">
+        </div>
+        <button type="submit" id="admin-modal-submit" class="cyber-button w-full py-3 mt-2 text-xs tracking-widest font-bold uppercase flex items-center justify-center space-x-2">
+          <span>Authenticate</span>
+          <i data-lucide="lock" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    // Initialize Lucide Icons
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+      initThreeParticles();
+      initCursorGlow();
+      
+      // Auto redirect to index.html if already logged in (JWT token exists)
+      if (localStorage.getItem('token')) {
+        window.location.href = 'index.html';
+      }
+    });
+
+    // Cursor Glow
+    function initCursorGlow() {
+      const glow = document.getElementById('cursor-glow');
+      if (!glow) return;
+      document.addEventListener('mousemove', (e) => {
+        gsap.to(glow, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      });
+    }
+
+    // Particle Background
+    function initThreeParticles() {
+      const canvas = document.getElementById('particles-canvas');
+      if (!canvas) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const count = 400;
+      const positions = new Float32Array(count * 3);
+      
+      for (let i = 0; i < count; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 10;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 5;
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const material = new THREE.PointsMaterial({
+        size: 0.015,
+        color: 0xe11d48,
+        transparent: true,
+        opacity: 0.4,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+
+      const particleSystem = new THREE.Points(geometry, material);
+      scene.add(particleSystem);
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        particleSystem.rotation.y += 0.0008;
+        particleSystem.rotation.x += 0.0003;
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+
+    // Tab Switcher Logic
+    let activeTab = 'login';
+    function switchTab(tab) {
+      if (activeTab === tab) return;
+      activeTab = tab;
+      
+      const tabLoginBtn = document.getElementById('tab-login');
+      const tabSignupBtn = document.getElementById('tab-signup');
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      const banner = document.getElementById('auth-banner');
+
+      banner.classList.add('hidden'); // Hide errors on switch
+
+      if (tab === 'login') {
+        tabLoginBtn.className = 'py-2.5 rounded-md text-white bg-rose-600/10 border border-rose-500/20 focus:outline-none transition-all duration-300';
+        tabSignupBtn.className = 'py-2.5 rounded-md text-zinc-400 hover:text-white focus:outline-none transition-all duration-300';
+        
+        gsap.to(signupForm, { opacity: 0, duration: 0.15, onComplete: () => {
+          signupForm.classList.add('hidden');
+          loginForm.classList.remove('hidden');
+          gsap.fromTo(loginForm, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25 });
+        }});
+      } else {
+        tabSignupBtn.className = 'py-2.5 rounded-md text-white bg-rose-600/10 border border-rose-500/20 focus:outline-none transition-all duration-300';
+        tabLoginBtn.className = 'py-2.5 rounded-md text-zinc-400 hover:text-white focus:outline-none transition-all duration-300';
+
+        gsap.to(loginForm, { opacity: 0, duration: 0.15, onComplete: () => {
+          loginForm.classList.add('hidden');
+          signupForm.classList.remove('hidden');
+          gsap.fromTo(signupForm, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25 });
+        }});
+      }
+    }
+
+    // Helper: show banner
+    function showBanner(text, isError = true) {
+      const banner = document.getElementById('auth-banner');
+      const bannerText = document.getElementById('auth-banner-text');
+      bannerText.innerText = text;
+      banner.classList.remove('hidden');
+      if (isError) {
+        banner.className = 'p-3.5 bg-rose-950/20 border border-rose-500/30 rounded-lg text-xs text-rose-300 flex items-start space-x-2';
+      } else {
+        banner.className = 'p-3.5 bg-emerald-950/20 border border-emerald-500/30 rounded-lg text-xs text-emerald-300 flex items-start space-x-2';
+      }
+    }
+
+    // Log In Submit
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const usernameOrEmail = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+      const submitBtn = document.getElementById('login-btn');
+
+      // Basic validation
+      if (!usernameOrEmail || !password) {
+        showBanner('Username/email and password are required.');
+        return;
+      }
+
+      // Show loading spinner
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Signing In...</span>
+      `;
+
+      try {
+        // ─── ADMIN CHECK (sent to backend for verification) ───
+        const isAdminAttempt = usernameOrEmail.toLowerCase() === 'ashwin';
+        if (isAdminAttempt) {
+          console.log('[AUTH] Admin login attempt detected for username:', usernameOrEmail);
+          const adminRes = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: usernameOrEmail, password })
+          });
+          const adminResult = await adminRes.json();
+          console.log('[AUTH] Admin auth result:', adminResult.success ? 'SUCCESS' : 'FAILED');
+
+          if (adminRes.ok && adminResult.success) {
+            // Store admin session
+            sessionStorage.setItem('adminPassword', adminResult.adminPassword || password);
+            showBanner('Admin access granted. Redirecting to dashboard...', false);
+            console.log('[AUTH] Redirecting to admin dashboard...');
+            setTimeout(() => { window.location.href = 'admin.html'; }, 700);
+            return;
+          } else {
+            showBanner(adminResult.error || 'Invalid admin credentials.');
+            return;
+          }
+        }
+
+        // ─── STUDENT LOGIN (sent to backend) ───
+        console.log('[AUTH] Student login attempt for:', usernameOrEmail);
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: usernameOrEmail, password })
+        });
+        
+        const result = await response.json();
+        console.log('[AUTH] Student auth result:', result.success ? 'SUCCESS' : 'FAILED');
+        
+        if (response.ok && result.success) {
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('currentUser', JSON.stringify(result.user));
+          showBanner('Login successful! Redirecting...', false);
+          setTimeout(() => { window.location.href = 'index.html'; }, 800);
+        } else {
+          showBanner(result.error || 'Incorrect username or password.');
+        }
+      } catch (err) {
+        console.error('[AUTH] Connection error:', err);
+        showBanner('Connection error. Please check the server is running.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    });
+
+    // Sign Up Submit
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('signup-name').value.trim();
+      const department = document.getElementById('signup-department').value;
+      const phone = document.getElementById('signup-phone').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+      const submitBtn = document.getElementById('signup-btn');
+
+      if (!name || !email || !password || !confirmPassword) {
+        showBanner('Name, email and password are required.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showBanner('Passwords do not match.');
+        return;
+      }
+
+      if (password.length < 4) {
+        showBanner('Password must be at least 4 characters.');
+        return;
+      }
+
+      // Add loading spinner
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Creating Account...</span>
+      `;
+
+      try {
+        const response = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, department, phone, email, password })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
+          showBanner('Account created! Please sign in with your credentials.', false);
+          setTimeout(() => {
+            switchTab('login');
+            document.getElementById('login-email').value = email;
+          }, 1500);
+        } else {
+          showBanner(result.error || 'Account creation failed. Please try again.');
+        }
+      } catch (err) {
+        console.error(err);
+        showBanner('Connection error. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    });
+
+    // Admin Auth Logic
+    function openAdminAuthModal() {
+      const dialog = document.getElementById('admin-auth-dialog');
+      if (dialog) {
+        dialog.showModal();
+        setTimeout(() => {
+          dialog.classList.remove('opacity-0', 'scale-95');
+          dialog.classList.add('opacity-100', 'scale-100');
+        }, 10);
+      }
+    }
+
+    function closeAdminAuthModal() {
+      const dialog = document.getElementById('admin-auth-dialog');
+      if (dialog) {
+        dialog.classList.remove('opacity-100', 'scale-100');
+        dialog.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => {
+          dialog.close();
+          const err = document.getElementById('admin-auth-error');
+          if (err) err.classList.add('hidden');
+          const pwd = document.getElementById('admin-modal-password');
+          if (pwd) pwd.value = '';
+        }, 300);
+      }
+    }
+
+    document.getElementById('admin-auth-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pwdInput = document.getElementById('admin-modal-password');
+      const submitBtn = document.getElementById('admin-modal-submit');
+      const errorDiv = document.getElementById('admin-auth-error');
+      const errorText = document.getElementById('admin-auth-error-text');
+      
+      const password = pwdInput.value.trim();
+      if (!password) return;
+
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      `;
+      errorDiv.classList.add('hidden');
+
+      try {
+        const response = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok && result.success) {
+          sessionStorage.setItem('adminPassword', password);
+          window.location.href = 'admin.html';
+        } else {
+          errorText.innerText = result.error || 'Invalid dashboard password.';
+          errorDiv.classList.remove('hidden');
+          pwdInput.value = '';
+          pwdInput.focus();
+        }
+      } catch (err) {
+        errorText.innerText = 'Connection error. Please try again.';
+        errorDiv.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+        if(typeof lucide !== 'undefined') lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>

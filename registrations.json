@@ -1,0 +1,48 @@
+[
+  {
+    "id": "c598c00f-61d1-466f-b9c5-2a3ff070cd73",
+    "name": "Test User",
+    "phone": "9778232241",
+    "email": "ashwinantonyjose28@gmail.com",
+    "department": "Computer Science & Engineering",
+    "year": 2,
+    "college_name": "carmel college",
+    "event": "UI/UX Design Challenge",
+    "gender": "Male",
+    "payment_screenshot_url": "Free Entry",
+    "created_at": "2026-06-19T08:30:55.275Z"
+  },
+  {
+    "id": "6715e735-03f7-4ffd-b8cf-a7effbe996c8",
+    "name": "anna",
+    "phone": "9778232241",
+    "email": "ashwinantonyjose28@gmail.com",
+    "department": "Computer Science & Engineering",
+    "year": 2,
+    "college_name": "carmel college",
+    "event": "Hackathon",
+    "gender": "Female",
+    "payment_screenshot_url": "Free Entry",
+    "created_at": "2026-06-22T04:28:37.293Z"
+  },
+  {
+    "id": "6732156d-296f-456d-b3cf-71a1357eb49f",
+    "name": "Ashwin Antony Jose",
+    "department": "Computer Science & Engineering",
+    "email": "ashwinantonyjose@gmail.com",
+    "studentId": "ashwin",
+    "event": "UI/UX Design Challenge",
+    "payment_screenshot_url": "Free Entry",
+    "created_at": "2026-06-22T06:12:37.379Z"
+  },
+  {
+    "id": "3bdb3851-a2dd-490e-ab91-7da231f47ec9",
+    "name": "jose",
+    "department": "Electrical & Electronics Engineering",
+    "email": "jose@gmail.com",
+    "studentId": "jose",
+    "event": "UI/UX Design Challenge",
+    "payment_screenshot_url": "Free Entry",
+    "created_at": "2026-06-23T04:33:05.722Z"
+  }
+]

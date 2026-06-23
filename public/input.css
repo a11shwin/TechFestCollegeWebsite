@@ -1,0 +1,239 @@
+@import "tailwindcss";
+@source "./";
+
+/* Carmel College Tech Fest - Premium Professional Red & Black Design System */
+
+/* Color & Design Tokens */
+:root {
+  --primary-red: #e11d48; /* Premium Rose/Crimson red */
+  --primary-red-glow: rgba(225, 29, 72, 0.25);
+  --bg-dark: #030303; /* Deep matte black */
+  --bg-slate: #09090b; /* Zinc slate */
+  --border-slate: rgba(255, 255, 255, 0.08);
+  
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* Tailwind handles .hidden natively */
+
+/* Base reset & configuration */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-dark);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-dark);
+  color: #fafafa;
+  overflow-x: hidden;
+}
+
+/* Scrollbars - Premium Slate Style */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-red);
+}
+
+/* Typography Enhancements */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 70%, var(--primary-red) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-glow-subtle {
+  text-shadow: 0 0 15px rgba(225, 29, 72, 0.3);
+}
+
+/* Subtle Interactive Glow Follower */
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(225, 29, 72, 0.04) 0%, rgba(225, 29, 72, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  mix-blend-mode: screen;
+}
+
+/* Premium Card Components (Stripe / Vercel style) */
+.glass-panel {
+  background: rgba(9, 9, 11, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-slate);
+}
+
+.glass-card {
+  background: rgba(9, 9, 11, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-slate);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(225, 29, 72, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(225, 29, 72, 0.05);
+  transform: translateY(-4px);
+}
+
+/* Animated Particles Container */
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Anti-gravity Repel Transitions */
+.repel-element {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+/* Pre-loader Design */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-spinner {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(255, 255, 255, 0.03);
+  border-left-color: var(--primary-red);
+  border-right-color: var(--primary-red);
+  border-radius: 50%;
+  animation: spin 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Form Inputs & Verification Indicators */
+input:user-invalid, select:user-invalid, textarea:user-invalid {
+  border-color: #f43f5e !important;
+  box-shadow: 0 0 8px rgba(244, 63, 94, 0.1) !important;
+  background-color: rgba(244, 63, 94, 0.02) !important;
+}
+
+input:user-valid, select:user-valid, textarea:user-valid {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.1) !important;
+  background-color: rgba(16, 185, 129, 0.02) !important;
+}
+
+.form-input {
+  background: rgba(20, 20, 25, 0.5);
+  border: 1px solid var(--border-slate);
+  color: #fff;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 48px;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 12px var(--primary-red-glow);
+}
+
+/* Professional Conference CTA Button */
+.cyber-button {
+  background: var(--primary-red);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.cyber-button:hover {
+  background: #f43f5e;
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.35);
+  transform: translateY(-1px);
+}
+
+.cyber-button:active {
+  transform: translateY(1px);
+}
+
+/* Event List Card Badge */
+.event-tag {
+  background: rgba(225, 29, 72, 0.08);
+  border: 1px solid rgba(225, 29, 72, 0.2);
+  color: #f43f5e;
+}
+
+/* Native dialog configuration */
+dialog::backdrop {
+  background: rgba(3, 3, 3, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+/* Print CSS adjustments */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  nav, button, .cursor-glow, #particles-canvas, .no-print, dialog, .cyber-button {
+    display: none !important;
+  }
+  .print-container {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #000000 !important;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #e4e4e7 !important;
+    padding: 8px !important;
+    color: #000000 !important;
+  }
+}
