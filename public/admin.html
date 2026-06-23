@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard | IGNITRON '26</title>
-  
+
   <!-- Production Compiled Stylesheet -->
-  
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css?v=2">
 </head>
+
 <body class="bg-black text-white h-full flex flex-col selection:bg-rose-600 selection:text-white">
 
   <!-- Password Gating Screen -->
-  <div id="admin-auth-overlay" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4">
-    <div class="glass-panel border border-white/10 p-8 rounded-2xl w-full max-w-md space-y-6 text-center shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-      <div class="w-14 h-14 bg-rose-600/5 text-rose-500 rounded-xl border border-rose-500/10 flex items-center justify-center mx-auto mb-2">
+  <div id="admin-auth-overlay"
+    class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4">
+    <div
+      class="glass-panel border border-white/10 p-8 rounded-2xl w-full max-w-md space-y-6 text-center shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+      <div
+        class="w-14 h-14 bg-rose-600/5 text-rose-500 rounded-xl border border-rose-500/10 flex items-center justify-center mx-auto mb-2">
         <i data-lucide="shield-check" class="w-7 h-7"></i>
       </div>
       <div>
@@ -24,17 +29,22 @@
       </div>
 
       <!-- Auth Error message -->
-      <div id="auth-error-banner" class="hidden p-3.5 bg-rose-950/20 border border-rose-500/30 rounded-lg text-xs text-rose-300">
+      <div id="auth-error-banner"
+        class="hidden p-3.5 bg-rose-950/20 border border-rose-500/30 rounded-lg text-xs text-rose-300">
         Authentication failed. Please verify credentials.
       </div>
 
       <form id="admin-login-form" class="space-y-4 text-left">
         <!-- Hidden username field to fix Chrome Password Manager confusion -->
         <input type="text" name="username" value="admin" autocomplete="username" class="hidden" aria-hidden="true">
-        
+
         <div>
-          <label for="admin-password" class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Dashboard Password</label>
-          <input type="password" id="admin-password" name="password" autocomplete="current-password" required class="form-input w-full px-4 rounded-md text-sm text-center tracking-widest focus:border-rose-500" placeholder="••••••••">
+          <label for="admin-password"
+            class="block text-[10px] uppercase font-display tracking-widest text-zinc-500 mb-1">Dashboard
+            Password</label>
+          <input type="password" id="admin-password" name="password" autocomplete="current-password" required
+            class="form-input w-full px-4 rounded-md text-sm text-center tracking-widest focus:border-rose-500"
+            placeholder="••••••••">
         </div>
         <button type="submit" class="cyber-button w-full py-3 text-xs tracking-widest font-bold uppercase">
           Verify Credentials
@@ -42,7 +52,8 @@
       </form>
 
       <div class="pt-4 border-t border-white/5">
-        <a href="index.html" class="text-xs text-zinc-500 hover:text-white flex items-center justify-center space-x-1 transition-colors">
+        <a href="index.html"
+          class="text-xs text-zinc-500 hover:text-white flex items-center justify-center space-x-1 transition-colors">
           <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
           <span>Return to Homepage</span>
         </a>
@@ -52,12 +63,13 @@
 
   <!-- Dashboard Main Layout (Hidden until authenticated) -->
   <div id="admin-dashboard-layout" class="hidden flex-grow flex flex-col">
-    
+
     <!-- Admin Header -->
     <header class="glass-panel border-b border-white/5 py-4 px-4 sm:px-6 lg:px-8 sticky top-0 z-30 no-print">
       <div class="max-w-7xl mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 bg-rose-600 rounded flex items-center justify-center font-display font-bold text-white text-sm shadow-[0_4px_12px_rgba(225,29,72,0.3)]">
+          <div
+            class="w-8 h-8 bg-rose-600 rounded flex items-center justify-center font-display font-bold text-white text-sm shadow-[0_4px_12px_rgba(225,29,72,0.3)]">
             A
           </div>
           <div>
@@ -67,11 +79,13 @@
         </div>
 
         <div class="flex items-center space-x-4">
-          <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-950/20 text-rose-400 border border-rose-500/20">
+          <span
+            class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-950/20 text-rose-400 border border-rose-500/20">
             <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5 animate-pulse"></span>
             Live Connection
           </span>
-          <button onclick="adminLogout()" class="px-4 py-2 border border-white/5 hover:border-zinc-700 rounded-md text-xs text-zinc-300 hover:text-white transition-colors flex items-center space-x-1.5">
+          <button onclick="adminLogout()"
+            class="px-4 py-2 border border-white/5 hover:border-zinc-700 rounded-md text-xs text-zinc-300 hover:text-white transition-colors flex items-center space-x-1.5">
             <i data-lucide="log-out" class="w-4 h-4"></i>
             <span class="hidden sm:inline font-medium">Lock Session</span>
           </button>
@@ -81,7 +95,7 @@
 
     <!-- Dashboard Content -->
     <main class="flex-grow p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full space-y-8">
-      
+
       <!-- Print Header (Visible only during prints) -->
       <div class="hidden print-container mb-6 pb-4 border-b border-zinc-200">
         <h2 class="text-2xl font-bold font-display">Carmel College of Engineering and Technology</h2>
@@ -91,14 +105,15 @@
 
       <!-- Stats Grid / Analytics -->
       <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 no-print">
-        
+
         <!-- Total Registrations -->
         <div class="glass-panel border border-white/5 p-6 rounded-xl shadow-lg relative overflow-hidden">
           <div class="absolute -right-6 -bottom-6 text-white/5">
             <i data-lucide="users" class="w-24 h-24"></i>
           </div>
           <h4 class="text-[10px] uppercase font-display font-semibold tracking-widest text-zinc-500">Total Booked</h4>
-          <p id="stat-total-registrations" class="text-3xl sm:text-4xl font-display font-extrabold text-white text-glow-subtle mt-2">0</p>
+          <p id="stat-total-registrations"
+            class="text-3xl sm:text-4xl font-display font-extrabold text-white text-glow-subtle mt-2">0</p>
           <div class="mt-2 text-[10px] text-zinc-500">Total registration entries</div>
         </div>
 
@@ -117,7 +132,8 @@
           <div class="absolute -right-6 -bottom-6 text-white/5">
             <i data-lucide="trophy" class="w-24 h-24"></i>
           </div>
-          <h4 class="text-[10px] uppercase font-display font-semibold tracking-widest text-zinc-500">Top Competition</h4>
+          <h4 class="text-[10px] uppercase font-display font-semibold tracking-widest text-zinc-500">Top Competition
+          </h4>
           <p id="stat-top-event" class="text-base font-display font-bold text-white mt-3.5 truncate">N/A</p>
           <div id="stat-top-event-count" class="text-[10px] text-rose-500 mt-1 font-semibold">0 registrations</div>
         </div>
@@ -136,7 +152,7 @@
 
       <!-- Charts & Aggregations -->
       <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 no-print">
-        
+
         <!-- Event-wise Registrations Progress Bar Chart -->
         <div class="glass-panel border border-white/5 p-6 rounded-xl lg:col-span-2 space-y-5">
           <h3 class="font-display font-bold text-xs tracking-widest text-rose-500 uppercase flex items-center">
@@ -165,21 +181,22 @@
 
       <!-- Registrations Data Table Controls -->
       <section class="glass-panel border border-white/5 rounded-2xl overflow-hidden shadow-2xl space-y-6 p-6">
-        
+
         <!-- Search & Filter Area -->
         <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-white/5 pb-6 no-print">
-          
+
           <!-- Search box -->
           <div class="relative w-full md:max-w-xs">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
               <i data-lucide="search" class="w-4 h-4"></i>
             </div>
-            <input type="text" id="search-input" class="form-input w-full pl-10 pr-4 rounded-md text-xs" placeholder="Search participant details...">
+            <input type="text" id="search-input" class="form-input w-full pl-10 pr-4 rounded-md text-xs"
+              placeholder="Search participant details...">
           </div>
 
           <!-- Filters & Exports -->
           <div class="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto">
-            
+
             <!-- Event filter -->
             <select id="filter-event" class="form-input rounded-md text-xs py-2 px-3 focus:border-rose-500">
               <option value="">All Events</option>
@@ -205,17 +222,23 @@
             </select>
 
             <!-- Action buttons -->
-            <button onclick="exportToCSV()" class="p-2 border border-white/5 hover:border-rose-500 rounded text-xs text-zinc-300 hover:text-white transition-colors flex items-center space-x-1 cursor-pointer" title="Export as CSV">
+            <button onclick="exportToCSV()"
+              class="p-2 border border-white/5 hover:border-rose-500 rounded text-xs text-zinc-300 hover:text-white transition-colors flex items-center space-x-1 cursor-pointer"
+              title="Export as CSV">
               <i data-lucide="download" class="w-4 h-4"></i>
               <span class="hidden sm:inline font-medium">CSV</span>
             </button>
 
-            <button onclick="exportToExcel()" class="p-2 border border-white/5 hover:border-rose-500 rounded text-xs text-zinc-300 hover:text-white transition-colors flex items-center space-x-1 cursor-pointer" title="Export as Excel">
+            <button onclick="exportToExcel()"
+              class="p-2 border border-white/5 hover:border-rose-500 rounded text-xs text-zinc-300 hover:text-white transition-colors flex items-center space-x-1 cursor-pointer"
+              title="Export as Excel">
               <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
               <span class="hidden sm:inline font-medium">Excel</span>
             </button>
 
-            <button onclick="printRegistrations()" class="p-2 bg-rose-600 hover:bg-rose-700 rounded-md text-xs text-white transition-colors flex items-center space-x-1 cursor-pointer font-semibold" title="Print/Save PDF">
+            <button onclick="printRegistrations()"
+              class="p-2 bg-rose-600 hover:bg-rose-700 rounded-md text-xs text-white transition-colors flex items-center space-x-1 cursor-pointer font-semibold"
+              title="Print/Save PDF">
               <i data-lucide="printer" class="w-4 h-4"></i>
               <span>Print List</span>
             </button>
@@ -228,7 +251,8 @@
         <div class="overflow-x-auto w-full border border-white/5 rounded-lg">
           <table class="w-full text-left text-sm border-collapse" id="registrations-table">
             <thead>
-              <tr class="bg-zinc-950/60 border-b border-white/10 text-[10px] font-display font-semibold text-zinc-400 uppercase tracking-widest">
+              <tr
+                class="bg-zinc-950/60 border-b border-white/10 text-[10px] font-display font-semibold text-zinc-400 uppercase tracking-widest">
                 <th class="py-4 px-4">Participant</th>
                 <th class="py-4 px-4">Contact Details</th>
                 <th class="py-4 px-4">College & Dept</th>
@@ -239,7 +263,8 @@
             </thead>
             <tbody id="table-body" class="divide-y divide-white/5 text-xs text-zinc-300">
               <tr>
-                <td colspan="6" class="py-8 text-center text-zinc-500 font-display">Loading registrations dataset...</td>
+                <td colspan="6" class="py-8 text-center text-zinc-500 font-display">Loading registrations dataset...
+                </td>
               </tr>
             </tbody>
           </table>
@@ -252,20 +277,24 @@
   </div>
 
   <!-- Screenshot Preview Modal -->
-  <dialog id="screenshot-dialog" class="glass-panel border border-white/10 rounded-2xl p-0 w-full max-w-lg text-white outline-none shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+  <dialog id="screenshot-dialog"
+    class="glass-panel border border-white/10 rounded-2xl p-0 w-full max-w-lg text-white outline-none shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
     <div class="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-zinc-950/40">
       <h3 class="font-display font-bold text-xs tracking-widest text-rose-500 uppercase">Payment screenshot receipt</h3>
-      <button onclick="closeScreenshotModal()" class="text-zinc-400 hover:text-white transition-colors focus:outline-none">
+      <button onclick="closeScreenshotModal()"
+        class="text-zinc-400 hover:text-white transition-colors focus:outline-none">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
     </div>
     <div class="p-6 flex flex-col items-center justify-center bg-black/50">
-      <div class="w-full max-h-[60vh] overflow-auto border border-white/5 rounded-lg flex items-center justify-center bg-zinc-950">
-        <img id="screenshot-preview-img" src="" alt="Payment Screenshot" class="max-w-full max-h-[60vh] object-contain">
+      <div
+        class="w-full max-h-[60vh] overflow-auto border border-white/5 rounded-lg flex items-center justify-center bg-zinc-950">
+        <img id="screenshot-preview-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Payment Screenshot" class="max-w-full max-h-[60vh] object-contain">
       </div>
       <div class="mt-4 flex items-center justify-between w-full text-xs text-zinc-400">
         <span>Verify transaction details before confirming.</span>
-        <a id="download-screenshot-btn" href="" download target="_blank" class="text-rose-500 hover:underline flex items-center space-x-1">
+        <a id="download-screenshot-btn" href="" download target="_blank"
+          class="text-rose-500 hover:underline flex items-center space-x-1">
           <i data-lucide="download" class="w-3.5 h-3.5 mr-0.5"></i>
           <span>Open Full Image</span>
         </a>
@@ -278,4 +307,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="admin.js"></script>
 </body>
+
 </html>
