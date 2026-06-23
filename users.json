@@ -47,5 +47,13 @@
     "email": "ashwin@gmail.com",
     "passwordHash": "$2b$10$8.OA3Wg4A9AmvVkO/3iV7OsTwaThdDA4pyaeb7nLLjlQ8NVg/D/KG",
     "created_at": "2026-06-23T04:56:43.007Z"
+  },
+  {
+    "id": "5044dd85-361e-4ab4-84b8-4aa25583cfe8",
+    "name": "plumber",
+    "department": "Civil Engineering",
+    "email": "plumber@gmail.com",
+    "passwordHash": "$2b$10$9xVF2CTgCUNpwMOknimljueYoMk.P6xiXuA5WSz5DD50YPnsFo1z.",
+    "created_at": "2026-06-23T06:38:43.923Z"
   }
 ]

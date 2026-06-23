@@ -242,22 +242,19 @@ function renderTable(data) {
 
     return `
       <tr class="admin-table-row border-b border-white/5 transition-colors">
-        <!-- Participant -->
-        <td class="py-4 px-4">
-          <div class="font-bold text-white text-sm">${reg.name}</div>
-          <div class="text-[10px] text-gray-500 uppercase font-mono">${reg.studentId || reg.gender || 'STUDENT'}</div>
+        <!-- Participant Name -->
+        <td class="py-4 px-4 text-white">
+          <div class="font-bold text-sm">${reg.name}</div>
         </td>
         
-        <!-- Contact -->
-        <td class="py-4 px-4 font-mono">
-          <div class="text-white">${reg.email}</div>
-          <div class="text-gray-400 mt-0.5">${reg.studentId || reg.phone || 'N/A'}</div>
+        <!-- Department -->
+        <td class="py-4 px-4 text-white">
+          <div class="text-xs truncate max-w-[200px]" title="${reg.department || 'N/A'}">${reg.department || 'N/A'}</div>
         </td>
         
-        <!-- College & Department -->
-        <td class="py-4 px-4">
-          <div class="text-white font-medium truncate max-w-[200px]" title="${reg.college_name || 'Carmel College of Eng'}">${reg.college_name || 'Carmel College of Eng'}</div>
-          <div class="text-[10px] text-red-500 truncate max-w-[200px]" title="${reg.department}">${reg.department} ${reg.year ? `- Yr ${reg.year}` : ''}</div>
+        <!-- Year of Study -->
+        <td class="py-4 px-4 font-mono text-zinc-400">
+          ${reg.year || 'N/A'}
         </td>
         
         <!-- Selected Event -->

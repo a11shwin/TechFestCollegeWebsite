@@ -44,5 +44,15 @@
     "event": "UI/UX Design Challenge",
     "payment_screenshot_url": "Free Entry",
     "created_at": "2026-06-23T04:33:05.722Z"
+  },
+  {
+    "id": "000f56dc-adb3-4a7a-8e37-629d0f457aba",
+    "name": "plumber",
+    "department": "Civil Engineering",
+    "email": "plumber@gmail.com",
+    "studentId": "plumber123",
+    "event": "Hackathon",
+    "payment_screenshot_url": "Free Entry",
+    "created_at": "2026-06-23T06:39:49.388Z"
   }
 ]
